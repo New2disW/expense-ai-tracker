@@ -8,12 +8,12 @@ This project uses a decoupled microservices architecture to enforce separation o
 
 ```mermaid
 graph TD
-    Client[Client (React/Vite)] -->|HTTP REST| Server[Server (Node/Express)]
-    Client -->|HTTP REST + JWT| AIService[AI Service (Python/FastAPI)]
-    Server -->|HTTP REST + Service Secret| AIService
-    Server <--> MongoDB[(MongoDB)]
-    AIService <--> FAISS[(FAISS Vector Store)]
-    AIService <--> Groq[(Groq LLM)]
+    Client["Client (React/Vite)"] -->|"HTTP REST"| Server["Server (Node/Express)"]
+    Client -->|"HTTP REST + JWT"| AIService["AI Service (Python/FastAPI)"]
+    Server -->|"HTTP REST + Service Secret"| AIService
+    Server <--> MongoDB[("MongoDB")]
+    AIService <--> FAISS[("FAISS Vector Store")]
+    AIService <--> Groq[("Groq LLM")]
 ```
 
 ### Authentication Flow (JWT)
