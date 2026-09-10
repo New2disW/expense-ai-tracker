@@ -61,7 +61,7 @@ export default function Layout({ children, currentPageName }) {
         }
 
         .slideshow-bg {
-          background: linear-gradient(-45deg, #0f172a, #1e293b, #0c4a6e, #065f46);
+          background: linear-gradient(-45deg, #312e81, #3730a3, #4338ca, #4f46e5);
           background-size: 400% 400%;
           animation: bg-slideshow 20s ease infinite;
         }
@@ -76,12 +76,12 @@ export default function Layout({ children, currentPageName }) {
           background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
         }
         
-        .accent-gradient-emerald {
-          background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+        .accent-gradient-indigo {
+          background: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
         }
         
-        .accent-gradient {
-          background: linear-gradient(135deg, #4ECDC4 0%, #3CB3A6 100%);
+        .accent-gradient-indigo {
+          background: linear-gradient(135deg, #818cf8 0%, #4f46e5 100%);
         }
         
         .hover-lift {
@@ -93,8 +93,8 @@ export default function Layout({ children, currentPageName }) {
           box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25), 0 7px 10px rgba(0, 0, 0, 0.22);
         }
 
-        .teal-shadow {
-          box-shadow: 0 4px 14px rgba(78, 205, 196, 0.3);
+        .indigo-shadow {
+          box-shadow: 0 4px 14px rgba(99, 102, 241, 0.3);
         }
       `}</style>
       
@@ -102,7 +102,7 @@ export default function Layout({ children, currentPageName }) {
         <Sidebar className="border-r-0 sidebar-gradient">
           <SidebarHeader className="border-b border-white/10 p-6">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 accent-gradient-emerald rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/20">
+              <div className="w-10 h-10 accent-gradient-indigo rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
                 <Wallet className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -125,7 +125,7 @@ export default function Layout({ children, currentPageName }) {
                         asChild 
                         className={`group hover:bg-white/10 transition-all duration-300 rounded-lg ${
                           location.pathname === item.url 
-                            ? 'bg-emerald-500/20 text-emerald-300' 
+                            ? 'bg-indigo-500/20 text-indigo-300' 
                             : 'text-slate-300 hover:text-white'
                         }`}
                       >
@@ -154,7 +154,7 @@ export default function Layout({ children, currentPageName }) {
                 </Button>
             </SidebarTrigger>
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 accent-gradient-emerald rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/20">
+              <div className="w-8 h-8 accent-gradient-indigo rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
                 <Wallet className="w-5 h-5 text-white" />
               </div>
               <h2 className="font-bold text-white text-lg">ExpenseAI</h2>

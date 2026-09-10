@@ -97,7 +97,7 @@ export default function Dashboard() {
       {/* Animated Background Layers */}
       <div className="fixed inset-0 w-full h-full -z-10 bg-slate-950">
         {/* Layer 1: Subtle moving gradient */}
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-emerald-900/10 via-slate-900/50 to-indigo-900/10"
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-indigo-900/10 via-slate-900/50 to-indigo-900/10"
               style={{ backgroundSize: '200% 200%', animation: 'gradient-move 30s ease infinite alternate' }}></div>
         {/* Layer 2: Radial blobs fading in/out */}
         <div className="absolute inset-0 w-full h-full"
@@ -119,7 +119,7 @@ export default function Dashboard() {
               <p className="text-slate-300 font-medium">Your financial overview at a glance.</p>
             </div>
             <Link to={createPageUrl("AddExpense")}>
-              <Button className="rounded-full px-8 py-3 accent-gradient-emerald text-white border-0 hover:opacity-90 font-bold shadow-lg shadow-emerald-500/20 hover-lift">
+              <Button className="rounded-full px-8 py-3 accent-gradient-indigo text-white border-0 hover:opacity-90 font-bold shadow-lg shadow-indigo-500/20 hover-lift">
                 <Plus className="w-5 h-5 mr-2" />
                 Add Expense
               </Button>
@@ -181,13 +181,13 @@ export default function Dashboard() {
                   </div>
                 ) : (
                   <div className="text-center py-12 bg-slate-900/60 backdrop-blur-md border border-slate-700/50 rounded-lg">
-                    <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center bg-emerald-500/10">
-                      <Receipt className="w-10 h-10 text-emerald-400" />
+                    <div className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center bg-indigo-500/10">
+                      <Receipt className="w-10 h-10 text-indigo-400" />
                     </div>
                     <h3 className="text-lg font-bold mb-2 text-white">No expenses yet</h3>
                     <p className="text-slate-300 mb-6 font-medium">Add an expense to start tracking your finances.</p>
                     <Link to={createPageUrl("AddExpense")}>
-                      <Button className="rounded-full px-8 py-3 accent-gradient-emerald text-white border-0 hover:opacity-90 font-bold shadow-lg shadow-emerald-500/20">
+                      <Button className="rounded-full px-8 py-3 accent-gradient-indigo text-white border-0 hover:opacity-90 font-bold shadow-lg shadow-indigo-500/20">
                         <Plus className="w-4 h-4 mr-2" />
                         Add Your First Expense
                       </Button>

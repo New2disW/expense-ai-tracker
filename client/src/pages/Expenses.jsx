@@ -298,7 +298,7 @@ export default function Expenses() {
                 Export CSV
               </Button>
               <Link to={createPageUrl("AddExpense")}>
-                <Button className="rounded-full px-8 py-3 accent-gradient text-white border-0 hover:opacity-90 font-bold teal-shadow hover-lift transition-all duration-200">
+                <Button className="rounded-full px-8 py-3 accent-gradient-indigo text-white border-0 hover:opacity-90 font-bold indigo-shadow hover-lift transition-all duration-200">
                   <Plus className="w-5 h-5 mr-2" />
                   Add Expense
                 </Button>
@@ -314,7 +314,7 @@ export default function Expenses() {
                   placeholder="Search expenses..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-10 bg-slate-800/80 rounded-lg border-slate-600 text-white placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="pl-10 bg-slate-800/80 rounded-lg border-slate-600 text-white placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500"
                 />
               </div>
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
@@ -355,8 +355,8 @@ export default function Expenses() {
               ))
             ) : (
               <div className="text-center py-12 bg-slate-900/60 backdrop-blur-md rounded-lg border border-slate-700/50 shadow-md">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-lg flex items-center justify-center bg-emerald-500/10">
-                  <Search className="w-10 h-10 text-emerald-400" />
+                <div className="w-20 h-20 mx-auto mb-6 rounded-lg flex items-center justify-center bg-indigo-500/10">
+                  <Search className="w-10 h-10 text-indigo-400" />
                 </div>
                 <h3 className="text-lg font-bold mb-2 text-white">
                   {expenses.length === 0 ? "No expenses yet" : "No expenses match your filters"}
@@ -369,7 +369,7 @@ export default function Expenses() {
                 </p>
                 {expenses.length === 0 && (
                   <Link to={createPageUrl("AddExpense")}>
-                    <Button className="rounded-full px-8 py-3 accent-gradient text-white border-0 hover:opacity-90 font-bold teal-shadow transition-all duration-200">
+                    <Button className="rounded-full px-8 py-3 accent-gradient-indigo text-white border-0 hover:opacity-90 font-bold indigo-shadow transition-all duration-200">
                       <Plus className="w-4 h-4 mr-2" />
                       Add Your First Expense
                     </Button>

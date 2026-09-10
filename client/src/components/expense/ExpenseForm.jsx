@@ -76,9 +76,16 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
     const token = userInfo ? JSON.parse(userInfo).token : '';
     const aiServiceUrl = import.meta.env.VITE_AI_SERVICE_URL || 'http://localhost:8000';
 
+    const timeoutId = setTimeout(() => {
+      worker.terminate();
+      setIsUploading(false);
+      setUploadError("Request timed out after 90 seconds. The AI service might be waking up. Please try again.");
+    }, 90000);
+
     worker.postMessage({ file, token, aiServiceUrl });
     
     worker.onmessage = (event) => {
+      clearTimeout(timeoutId);
       setIsUploading(false);
       const { success, data, error } = event.data;
       
@@ -96,6 +103,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
     };
     
     worker.onerror = (error) => {
+      clearTimeout(timeoutId);
       setIsUploading(false);
       setUploadError("Worker error occurred");
       worker.terminate();
@@ -113,6 +121,9 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
     setUploadError(null);
     setMissingFields([]);
     
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => abortController.abort(), 90000);
+    
     try {
       const userInfo = localStorage.getItem('userInfo');
       const token = userInfo ? JSON.parse(userInfo).token : '';
@@ -124,8 +135,11 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ text: nlInput })
+        body: JSON.stringify({ text: nlInput }),
+        signal: abortController.signal
       });
+      
+      clearTimeout(timeoutId);
       
       if (!response.ok) throw new Error("Failed to parse natural language");
       
@@ -138,7 +152,11 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
       setMissingFields(missing);
       setNlInput("");
     } catch (error) {
-      setUploadError(error.message);
+      if (error.name === 'AbortError') {
+        setUploadError("Request timed out after 90 seconds. The AI service might be waking up. Please try again.");
+      } else {
+        setUploadError(error.message || "Failed to process magic fill.");
+      }
     }
     setIsParsingNL(false);
   };
@@ -147,6 +165,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
     if (!formData.description.trim()) return;
 
     setIsCategorizingAI(true);
+    setUploadError(null);
     try {
       const response = await InvokeLLM({
         prompt: `Analyze this expense description and categorize it: "${formData.description}"
@@ -180,6 +199,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
       setAiSuggestion(response);
     } catch (error) {
       console.error("AI categorization failed:", error);
+      setUploadError(error.message || "AI categorization failed or timed out. Please try again.");
     }
     setIsCategorizingAI(false);
   };
@@ -240,7 +260,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
         <div className="flex items-center justify-between p-4 mb-6 rounded-lg bg-slate-800/50 border border-slate-700/50 border-dashed">
           <div>
             <h3 className="text-sm font-bold text-white flex items-center gap-2">
-              <FileText className="w-4 h-4 text-emerald-400" />
+              <FileText className="w-4 h-4 text-indigo-400" />
               Scan Receipt
             </h3>
             <p className="text-xs text-slate-400 mt-1">Upload a PDF or image to auto-fill details.</p>
@@ -275,6 +295,16 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
           </div>
         </div>
         
+        {(isUploading || isParsingNL || isCategorizingAI) && (
+          <div className="p-3 mb-6 rounded-lg bg-indigo-900/20 border border-indigo-500/30 flex items-start gap-2 text-indigo-300 text-sm animate-pulse">
+            <Loader2 className="w-4 h-4 mt-0.5 animate-spin flex-shrink-0" />
+            <div>
+              <p className="font-medium">Waking up AI service...</p>
+              <p className="text-xs opacity-80 mt-1">This can take up to a minute on first use if the service was idle.</p>
+            </div>
+          </div>
+        )}
+
         {uploadError && (
           <div className="p-3 mb-6 rounded-lg bg-red-900/20 border border-red-500/50 flex items-center gap-2 text-red-200 text-sm">
             <AlertCircle className="w-4 h-4 text-red-400 flex-shrink-0" />
@@ -295,7 +325,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
                 min="0"
                 value={formData.amount}
                 onChange={(e) => handleInputChange('amount', e.target.value)}
-                className={`text-lg font-medium rounded-lg bg-slate-800/80 text-white placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500 transition-colors ${missingFields.includes('amount') ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-600'}`}
+                className={`text-lg font-medium rounded-lg bg-slate-800/80 text-white placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${missingFields.includes('amount') ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-600'}`}
                 placeholder="0.00"
                 required
               />
@@ -310,7 +340,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
                 type="date"
                 value={formData.date}
                 onChange={(e) => handleInputChange('date', e.target.value)}
-                className={`rounded-lg bg-slate-800/80 text-white placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500 transition-colors ${missingFields.includes('date') ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-600'}`}
+                className={`rounded-lg bg-slate-800/80 text-white placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${missingFields.includes('date') ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-600'}`}
                 required
               />
             </div>
@@ -326,7 +356,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
                 placeholder="What did you spend money on?"
-                className={`resize-none rounded-lg bg-slate-800/80 text-white placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500 transition-colors ${missingFields.includes('description') ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-600'}`}
+                className={`resize-none rounded-lg bg-slate-800/80 text-white placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${missingFields.includes('description') ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-600'}`}
                 rows={3}
                 required
               />
@@ -348,11 +378,11 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
           </div>
 
           {aiSuggestion && (
-            <div className="p-4 rounded-lg bg-emerald-900/30 border border-emerald-500/50">
+            <div className="p-4 rounded-lg bg-indigo-900/30 border border-indigo-500/50">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="font-bold text-white">
-                    AI suggests: <span className="font-bold text-emerald-300">{categoryLabels[aiSuggestion.category]}</span>
+                    AI suggests: <span className="font-bold text-indigo-300">{categoryLabels[aiSuggestion.category]}</span>
                   </p>
                   <p className="text-sm font-medium text-slate-300 mt-1">{aiSuggestion.explanation}</p>
                 </div>
@@ -379,7 +409,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
                 required
               >
                 <SelectTrigger
-                  className={`rounded-lg bg-slate-800/80 text-white placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500 transition-colors ${missingFields.includes('category') ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-600'}`}
+                  className={`rounded-lg bg-slate-800/80 text-white placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500 transition-colors ${missingFields.includes('category') ? 'border-amber-500 ring-1 ring-amber-500' : 'border-slate-600'}`}
                 >
                   <SelectValue placeholder="Select category" />
                 </SelectTrigger>
@@ -400,7 +430,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
                 onValueChange={(value) => handleInputChange('payment_method', value)}
               >
                 <SelectTrigger
-                  className="rounded-lg bg-slate-800/80 border-slate-600 text-white placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500"
+                  className="rounded-lg bg-slate-800/80 border-slate-600 text-white placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500"
                 >
                   <SelectValue />
                 </SelectTrigger>
@@ -422,7 +452,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
               value={formData.notes}
               onChange={(e) => handleInputChange('notes', e.target.value)}
               placeholder="Additional notes..."
-              className="resize-none rounded-lg bg-slate-800/80 border-slate-600 text-white placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500"
+              className="resize-none rounded-lg bg-slate-800/80 border-slate-600 text-white placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500"
               rows={2}
             />
           </div>
@@ -440,7 +470,7 @@ export default function ExpenseForm({ expense, onSubmit, onCancel, isLoading }) 
             <Button
               type="submit"
               disabled={isLoading}
-              className="rounded-full px-8 accent-gradient text-white border-0 hover:opacity-90 font-bold teal-shadow hover-lift transition-all duration-200"
+              className="rounded-full px-8 accent-gradient-indigo text-white border-0 hover:opacity-90 font-bold indigo-shadow hover-lift transition-all duration-200"
             >
               {isLoading ? (
                 <Loader2 className="w-4 h-4 animate-spin" />

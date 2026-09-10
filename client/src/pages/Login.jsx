@@ -44,7 +44,7 @@ export default function Login() {
     <div className="min-h-screen bg-slate-950 flex flex-col justify-center py-12 sm:px-6 lg:px-8 font-sans slideshow-bg">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Link to="/" className="flex items-center justify-center gap-2 mb-8 hover:opacity-80 transition-opacity">
-          <div className="w-10 h-10 accent-gradient-emerald rounded-xl flex items-center justify-center shadow-lg shadow-emerald-500/20">
+          <div className="w-10 h-10 accent-gradient-indigo rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/20">
             <Wallet className="w-6 h-6 text-white" />
           </div>
           <span className="font-bold text-2xl tracking-tight text-white">ExpenseAI</span>
@@ -73,7 +73,7 @@ export default function Login() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required 
-                  className="bg-slate-950/50 border-white/10 text-white focus:border-emerald-500"
+                  className="bg-slate-950/50 border-white/10 text-white focus:border-indigo-500"
                   placeholder="name@example.com"
                 />
               </div>
@@ -85,18 +85,18 @@ export default function Login() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required 
-                  className="bg-slate-950/50 border-white/10 text-white focus:border-emerald-500"
+                  className="bg-slate-950/50 border-white/10 text-white focus:border-indigo-500"
                 />
               </div>
               
-              <Button type="submit" disabled={loading} className="w-full h-11 accent-gradient-emerald border-0 text-white mt-6">
+              <Button type="submit" disabled={loading} className="w-full h-11 accent-gradient-indigo border-0 text-white mt-6">
                 {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Log in'}
               </Button>
             </form>
 
             <div className="mt-6 text-center text-sm text-slate-400">
               Don't have an account?{' '}
-              <Link to="/register" state={{ from: location.state?.from }} className="text-emerald-400 hover:text-emerald-300 font-medium">
+              <Link to="/register" state={{ from: location.state?.from }} className="text-indigo-400 hover:text-indigo-300 font-medium">
                 Sign up
               </Link>
             </div>

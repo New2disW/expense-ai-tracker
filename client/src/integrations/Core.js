@@ -25,12 +25,13 @@ export const InvokeLLM = async ({ prompt, response_json_schema }) => {
       }
     }
 
-    const res = await axios.post(`${aiServiceUrl}/parse-nl`, 
+    const res = await axios.post(`${aiServiceUrl}/api/chat/parse-nl`, 
       { text }, 
       {
         headers: {
           Authorization: token ? `Bearer ${token}` : ''
-        }
+        },
+        timeout: 90000 // 90 second timeout for cold starts
       }
     );
 

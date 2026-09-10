@@ -13,7 +13,7 @@ export default function Landing() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 accent-gradient-emerald rounded-lg flex items-center justify-center shadow-lg shadow-emerald-500/20">
+              <div className="w-8 h-8 accent-gradient-indigo rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/20">
                 <Wallet className="w-5 h-5 text-white" />
               </div>
               <span className="font-bold text-xl tracking-tight">ExpenseAI</span>
@@ -29,7 +29,7 @@ export default function Landing() {
                   <Button variant="ghost" asChild className="hidden sm:inline-flex text-slate-300 hover:text-white hover:bg-white/10">
                     <Link to="/Dashboard">Dashboard</Link>
                   </Button>
-                  <Button asChild className="accent-gradient-emerald border-0 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 text-white font-medium">
+                  <Button asChild className="accent-gradient-indigo border-0 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 text-white font-medium">
                     <Link to="/Dashboard">Go to App <ArrowRight className="w-4 h-4 ml-2" /></Link>
                   </Button>
                 </>
@@ -38,7 +38,7 @@ export default function Landing() {
                   <Button variant="ghost" asChild className="hidden sm:inline-flex text-slate-300 hover:text-white hover:bg-white/10">
                     <Link to="/login">Log in</Link>
                   </Button>
-                  <Button asChild className="accent-gradient-emerald border-0 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 text-white font-medium">
+                  <Button asChild className="accent-gradient-indigo border-0 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 text-white font-medium">
                     <Link to="/register">Get Started</Link>
                   </Button>
                 </>
@@ -51,19 +51,19 @@ export default function Landing() {
       <main className="flex-grow">
         {/* Hero Section */}
         <section className="pt-24 pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm font-medium mb-8">
             <Sparkles className="w-4 h-4" />
             <span>AI-Powered Financial Clarity</span>
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 bg-clip-text text-transparent bg-gradient-to-r from-white to-slate-400">
             Smart Expense Tracking <br className="hidden sm:block" />
-            <span className="text-emerald-400">On Autopilot</span>
+            <span className="text-indigo-400">On Autopilot</span>
           </h1>
           <p className="mt-4 text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed">
             Stop categorizing spreadsheets manually. ExpenseAI uses advanced natural language processing to organize, categorize, and analyze your spending instantly.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
-            <Button size="lg" asChild className="h-14 px-8 text-lg accent-gradient-emerald border-0 shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:-translate-y-1 transition-all duration-300">
+            <Button size="lg" asChild className="h-14 px-8 text-lg accent-gradient-indigo border-0 shadow-xl shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-1 transition-all duration-300">
               <Link to={userInfo ? "/Dashboard" : "/register"}>
                 Start Tracking Free <ArrowRight className="ml-2 w-5 h-5" />
               </Link>
@@ -97,8 +97,8 @@ export default function Landing() {
                 <p className="text-slate-400 leading-relaxed">Beautiful, interactive charts that help you understand your spending habits at a glance.</p>
               </div>
               <div className="p-8 rounded-2xl bg-slate-800/50 border border-white/10 hover-lift">
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center mb-6">
-                  <Shield className="w-6 h-6 text-emerald-400" />
+                <div className="w-12 h-12 rounded-xl bg-indigo-500/20 flex items-center justify-center mb-6">
+                  <Shield className="w-6 h-6 text-indigo-400" />
                 </div>
                 <h3 className="text-xl font-bold mb-3">Secure & Private</h3>
                 <p className="text-slate-400 leading-relaxed">Your financial data is encrypted and strictly private. We never sell your data or show advertisements.</p>
@@ -126,7 +126,7 @@ export default function Landing() {
                 <p className="text-slate-400">Use natural language or our chat interface to quickly add transactions.</p>
               </div>
               <div className="text-center">
-                <div className="w-16 h-16 mx-auto rounded-full bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-2xl font-bold mb-6">3</div>
+                <div className="w-16 h-16 mx-auto rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-2xl font-bold mb-6">3</div>
                 <h3 className="text-xl font-bold mb-2">Gain insights</h3>
                 <p className="text-slate-400">Watch your dashboard populate with actionable financial metrics.</p>
               </div>
@@ -162,7 +162,7 @@ export default function Landing() {
       <footer className="border-t border-white/10 bg-slate-950 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center gap-2 mb-4 md:mb-0">
-            <Wallet className="w-5 h-5 text-emerald-500" />
+            <Wallet className="w-5 h-5 text-indigo-500" />
             <span className="font-bold tracking-tight">ExpenseAI</span>
           </div>
           <p className="text-slate-500 text-sm">© {new Date().getFullYear()} ExpenseAI. All rights reserved.</p>

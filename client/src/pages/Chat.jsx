@@ -71,7 +71,7 @@ export default function Chat() {
     <div className="relative min-h-screen overflow-hidden bg-slate-950 p-6 md:p-8">
       {/* Background gradients similar to Dashboard */}
       <div className="fixed inset-0 w-full h-full -z-10">
-        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-emerald-900/10 via-slate-900/50 to-indigo-900/10"></div>
+        <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-indigo-900/10 via-slate-900/50 to-indigo-900/10"></div>
         <div className="absolute inset-0 w-full h-full bg-slate-900/80"></div>
       </div>
 
@@ -79,8 +79,8 @@ export default function Chat() {
         
         {/* Header */}
         <div className="p-6 border-b border-slate-700/50 bg-slate-800/40 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center">
-            <MessageSquare className="w-6 h-6 text-emerald-400" />
+          <div className="w-12 h-12 rounded-full bg-indigo-500/20 flex items-center justify-center">
+            <MessageSquare className="w-6 h-6 text-indigo-400" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">Ask Your Expenses</h1>
@@ -93,9 +93,9 @@ export default function Chat() {
           {messages.map((msg, idx) => (
             <div key={idx} className={`flex gap-4 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
               <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
-                msg.role === 'user' ? 'bg-indigo-500/20' : 'bg-emerald-500/20'
+                msg.role === 'user' ? 'bg-indigo-500/20' : 'bg-indigo-500/20'
               }`}>
-                {msg.role === 'user' ? <User className="w-5 h-5 text-indigo-400" /> : <Bot className="w-5 h-5 text-emerald-400" />}
+                {msg.role === 'user' ? <User className="w-5 h-5 text-indigo-400" /> : <Bot className="w-5 h-5 text-indigo-400" />}
               </div>
               
               <div className={`max-w-[80%] ${msg.role === 'user' ? 'items-end text-right' : 'items-start'}`}>
@@ -115,13 +115,13 @@ export default function Chat() {
                       {msg.sources.map((source, sIdx) => (
                         <div key={sIdx} className="bg-slate-800/60 border border-slate-600/50 rounded-lg p-3 flex items-center gap-3 w-full sm:w-[calc(50%-0.5rem)] hover:bg-slate-800 transition-colors">
                           <div className="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center flex-shrink-0">
-                            <Receipt className="w-4 h-4 text-emerald-400" />
+                            <Receipt className="w-4 h-4 text-indigo-400" />
                           </div>
                           <div className="overflow-hidden">
                             <p className="text-sm font-bold text-slate-200 truncate">{source.description}</p>
                             <p className="text-xs text-slate-400 flex justify-between gap-2">
                               <span>{source.date.split('T')[0]}</span>
-                              <span className="text-emerald-400 font-bold">${source.amount.toFixed(2)}</span>
+                              <span className="text-indigo-400 font-bold">${source.amount.toFixed(2)}</span>
                             </p>
                           </div>
                         </div>
@@ -135,11 +135,11 @@ export default function Chat() {
           
           {isLoading && (
             <div className="flex gap-4">
-              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center">
-                <Bot className="w-5 h-5 text-emerald-400" />
+              <div className="flex-shrink-0 w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center">
+                <Bot className="w-5 h-5 text-indigo-400" />
               </div>
               <div className="p-4 rounded-2xl bg-slate-800/80 text-slate-200 rounded-tl-none border border-slate-700/50 flex items-center gap-3">
-                <Loader2 className="w-5 h-5 animate-spin text-emerald-400" />
+                <Loader2 className="w-5 h-5 animate-spin text-indigo-400" />
                 <span className="text-sm font-medium animate-pulse">Searching your expenses...</span>
               </div>
             </div>
@@ -154,13 +154,13 @@ export default function Chat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               placeholder="e.g., What was my biggest expense this month?"
-              className="flex-1 bg-slate-900 border-slate-600 text-white placeholder-slate-400 focus:ring-emerald-500 focus:border-emerald-500 h-12 text-base rounded-full px-6"
+              className="flex-1 bg-slate-900 border-slate-600 text-white placeholder-slate-400 focus:ring-indigo-500 focus:border-indigo-500 h-12 text-base rounded-full px-6"
               disabled={isLoading}
             />
             <Button 
               type="submit" 
               disabled={!input.trim() || isLoading}
-              className="h-12 w-12 rounded-full p-0 flex items-center justify-center accent-gradient-emerald hover-lift border-0 shadow-lg shadow-emerald-500/20"
+              className="h-12 w-12 rounded-full p-0 flex items-center justify-center accent-gradient-indigo hover-lift border-0 shadow-lg shadow-indigo-500/20"
             >
               <Send className="w-5 h-5 text-white ml-1" />
             </Button>

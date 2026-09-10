@@ -14,7 +14,7 @@ export default function StatsCard({ title, value, change, icon: Icon, trend }) {
             <p className="text-2xl font-bold text-white">{value}</p>
             {change && (
               <div className={`flex items-center mt-3 text-sm ${
-                isPositive ? 'text-red-400' : 'text-emerald-400'
+                isPositive ? 'text-red-400' : 'text-indigo-400'
               }`}>
                 {isPositive ? (
                   <TrendingUp className="w-4 h-4 mr-1" />
@@ -26,9 +26,9 @@ export default function StatsCard({ title, value, change, icon: Icon, trend }) {
             )}
           </div>
           <div 
-            className="w-14 h-14 rounded-lg flex items-center justify-center bg-emerald-500/10"
+            className="w-14 h-14 rounded-lg flex items-center justify-center bg-indigo-500/10"
           >
-            <Icon className="w-7 h-7 text-emerald-300" />
+            <Icon className="w-7 h-7 text-indigo-300" />
           </div>
         </div>
       </CardContent>
