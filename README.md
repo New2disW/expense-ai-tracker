@@ -14,19 +14,31 @@ graph TD
     Server <--> MongoDB[("MongoDB")]
     AIService <--> FAISS[("FAISS Vector Store")]
     AIService <--> Groq[("Groq LLM")]
+    AIService --> PyTesseract["PyTesseract (OCR)"]
 ```
 
 ### Authentication Flow (JWT)
 1. **Login**: User logs into the **Server**. The Server validates against MongoDB and signs a JWT (`JWT_SECRET`).
 2. **Standard API**: Client sends `Authorization: Bearer <token>` to **Server** for all expense CRUD actions.
-3. **AI Features**: Client sends `Authorization: Bearer <token>` to **AI Service** for semantic search and receipt scanning. **AI Service** independently verifies the token's signature using the same shared `JWT_SECRET`.
+3. **AI Features**: Client sends `Authorization: Bearer <token>` to **AI Service** for semantic search and receipt scanning (powered by PyTesseract OCR and Groq LLMs). **AI Service** independently verifies the token's signature using the same shared `JWT_SECRET`.
 4. **Internal Sync**: When expenses change, the **Server** pushes updates to the **AI Service** (`/sync`) using a backend-only `SERVICE_SECRET`.
+
+---
+
+## Running Locally (Docker Compose)
+
+The easiest and recommended way to run the entire stack locally is using Docker Compose:
+
+```bash
+docker compose up --build
+```
+This will automatically build and start the Client (Vite) on port 5173, the Server (Express) on port 5000, and the AI Service (FastAPI) on port 8000.
 
 ---
 
 ## Deployment Instructions
 
-Do NOT use Docker Compose if you are deploying them to separate platforms.
+If you are deploying the services to separate cloud platforms (e.g., Render, Vercel, Railway), do **NOT** use the provided Docker Compose file. Instead, deploy each service individually as follows:
 
 ### 1. Server (Backend API)
 Deploy to a platform like **Render**, **Railway**, or **Heroku**.
