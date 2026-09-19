@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 // We use Vite's import.meta.env or standard process.env based on setup
-let rawApiUrl = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) 
-  ? import.meta.env.VITE_API_URL 
-  : 'http://localhost:5000/api';
+let rawApiUrl = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SERVER_URL) 
+  ? import.meta.env.VITE_SERVER_URL 
+  : 'http://localhost:5001/api';
 
 // Strip trailing slash if present, then ensure it ends with /api
 if (rawApiUrl.endsWith('/')) {

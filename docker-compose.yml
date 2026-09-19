@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: expense_client
+    ports:
+      - "5173:5173"
+    env_file:
+      - .env
+    depends_on:
+      - server
+      - ai-service
+    # By mapping .env, the Client will have access to VITE_SERVER_URL 
+    # and VITE_AI_SERVICE_URL at build/run time.
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: expense_server
+    ports:
+      - "5001:5000"
+    env_file:
+      - .env
+
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    container_name: expense_ai_service
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
